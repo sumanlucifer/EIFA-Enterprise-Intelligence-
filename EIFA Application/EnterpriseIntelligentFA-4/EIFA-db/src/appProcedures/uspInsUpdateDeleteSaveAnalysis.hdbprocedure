@@ -1,0 +1,45 @@
+PROCEDURE "EIFA.db.appProcedures::uspInsUpdateDeleteSaveAnalysis"
+( 
+    IN vUserID NVARCHAR(250),
+    IN vAnalysisHeaderID INTEGER,
+    IN vAnalysisName NVARCHAR(250),
+    IN vInputSource "EIFA.db.appTableTypes::uttInsUserSaveAnalysisInitial"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+AS
+BEGIN
+
+    UPDATE "EIFA.db.appTables::appUserSaveAnalysisHeader" 
+    SET "UserID"=:vUserID ,"SaveAnalysisName" =:vAnalysisName 
+    WHERE "UserSaveAnalysisHeaderID"=:vAnalysisHeaderID;
+    
+
+    DELETE FROM "EIFA.db.appTables::appUserSaveAnalysisDetail" WHERE "UserSaveAnalysisHeaderID" =:vAnalysisHeaderID;
+    
+    INSERT INTO "EIFA.db.appTables::appUserSaveAnalysisDetail" 
+    (
+        "UserSaveAnalysisHeaderID", 
+        "QueryDesc",
+        "QuerySQL",
+        "ParentQueryLibraryID",
+        "ChartType",
+        "QueryKeywords",
+        "SaveAnalysisOrder",
+        "CreatedBy",
+        "CreatedOn",
+        "Comments" 
+    )
+    SELECT 
+        :vAnalysisHeaderID "UserSaveAnalysisHeaderID",
+        "QueryDesc",
+        "QuerySQL",
+        NULL "ParentQueryLibraryID",
+        "ChartType",
+        "QueryKeywords",
+        "SaveAnalysisOrder",
+        :vUserID "CreatedBy",
+        CURRENT_TIMESTAMP "CreatedOn",
+        "Comments"
+    FROM :vInputSource;
+END

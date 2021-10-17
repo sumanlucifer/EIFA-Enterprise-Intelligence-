@@ -1,0 +1,107 @@
+VIEW "EIFA.db.datModels::CustomDuty" COMMENT 'Custom Duty'
+( "CompanyCode", 
+"Country", 
+"Year", 
+"AccountingNumber", 
+"AccountingNumberDescription", 
+"BusinessArea", 
+"BusinessAreaDescription", 
+"PostingPeriod", 
+"Quarter", 
+"PostingDate", 
+"Value", 
+"Revenue", 
+"Currency" ) AS SELECT
+			"CompanyCode",
+			"Country",
+			"Year",
+			"AccountingNumber",
+			COALESCE("AccountingNumberDescription",	"AccountingNumber") "AccountingNumberDescription",
+			"BusinessArea",
+			COALESCE("BusinessAreaDescription",	"BusinessArea") "BusinessAreaDescription",
+			"PostingPeriod",
+			"Quarter",
+			"PostingDate",
+			"Value",
+			"Revenue",
+			"Currency"
+		FROM( 
+			SELECT 
+				acdoca."RBUKRS" AS "CompanyCode",
+				t005t."LANDX" AS "Country",
+				acdoca."GJAHR" AS "Year",
+				acdoca."RACCT" AS "AccountingNumber",
+				skat."TXT50" AS "AccountingNumberDescription",
+				acdoca."RBUSA" AS "BusinessArea",
+				tgsbt."GTEXT" AS "BusinessAreaDescription",
+				acdoca."POPER" AS "PostingPeriod",
+				
+				CASE	WHEN acdoca."POPER" IN (1,2,3) THEN 'Q1'
+						WHEN acdoca."POPER" IN (4,5,6) THEN 'Q2'
+						WHEN acdoca."POPER" IN (7,8,9) THEN 'Q3' 
+						ELSE 'Q4' END "Quarter",
+				acdoca."BUDAT" AS "PostingDate",
+				
+				"KSL" AS "Value",
+					
+				CASE 	WHEN acdoca.RACCT IN ('301000','302000','303000','305000','401000','402000','403000','501000','502000','503000','601000','801000') THEN "KSL" END AS "Revenue",
+				
+				acdoca.RKCUR "Currency"
+			
+			FROM "EIFA.db::ACDOCA" acdoca
+			LEFT OUTER JOIN "EIFA.db::T001" t001 
+				ON 	acdoca.RCLNT = t001.MANDT AND
+					acdoca.RBUKRS = t001.BUKRS
+			LEFT OUTER JOIN "EIFA.db::T005T" t005t
+				ON 	t001.MANDT = t005t.MANDT AND
+					t001.LAND1 = t005t.LAND1 AND
+					t005t.SPRAS = 'E'
+			LEFT OUTER JOIN "EIFA.db::TGSBT" tgsbt 
+				ON 	acdoca.RCLNT = tgsbt.MANDT AND
+					acdoca.RBUSA = tgsbt.GSBER AND
+					tgsbt.SPRAS = 'E'
+			LEFT OUTER JOIN "EIFA.db::SKAT" skat 
+			ON 	acdoca.RCLNT = skat.MANDT AND
+				acdoca.RACCT = skat.SAKNR AND
+				skat.SPRAS = 'E'
+			
+			UNION ALL
+			
+			SELECT 
+				acdocp."RBUKRS" AS "CompanyCode",
+				t005t."LANDX" AS "Country",
+				acdocp."RYEAR" AS "Year",
+				acdocp."RACCT" AS "AccountingNumber",
+				skat."TXT50" AS "AccountingNumberDescription",
+				acdocp."RBUSA" AS "BusinessArea",
+				tgsbt."GTEXT" AS "BusinessAreaDescription",
+				acdocp."POPER" AS "PostingPeriod",
+				CASE	WHEN acdocp."POPER" IN (1,2,3) THEN 'Q1'
+						WHEN acdocp."POPER" IN (4,5,6) THEN 'Q2'
+						WHEN acdocp."POPER" IN (7,8,9) THEN 'Q3' 
+						ELSE 'Q4' END "Quarter",
+				acdocp."BUDAT" AS "PostingDate",
+				
+				acdocp."KSL" AS "ValuePlanned",
+
+				CASE 	WHEN acdocp.RACCT IN ('301000','302000','303000','305000','401000','402000','403000','501000','502000','503000','601000','801000') THEN "KSL" END AS "Revenue",
+				
+				acdocp.RKCUR "Currency"
+			
+			FROM "EIFA.db::ACDOCP" acdocp
+			LEFT OUTER JOIN "EIFA.db::T001" t001 
+				ON 	acdocp.RCLNT = t001.MANDT AND
+					acdocp.RBUKRS = t001.BUKRS
+			LEFT OUTER JOIN "EIFA.db::T005T" t005t
+				ON 	t001.MANDT = t005t.MANDT AND
+					t001.LAND1 = t005t.LAND1 AND
+					t005t.SPRAS = 'E'
+			LEFT OUTER JOIN "EIFA.db::TGSBT" tgsbt 
+				ON 	acdocp.RCLNT = tgsbt.MANDT AND
+					acdocp.RBUSA = tgsbt.GSBER AND
+					tgsbt.SPRAS = 'E'
+			LEFT OUTER JOIN "EIFA.db::SKAT" skat 
+			ON 	acdocp.RCLNT = skat.MANDT AND
+				acdocp.RACCT = skat.SAKNR AND
+				skat.SPRAS = 'E'
+		)

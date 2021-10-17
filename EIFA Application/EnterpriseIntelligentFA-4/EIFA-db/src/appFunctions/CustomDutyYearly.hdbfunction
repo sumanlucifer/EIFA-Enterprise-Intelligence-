@@ -1,0 +1,90 @@
+FUNCTION "EIFA.db.appFunctions::CustomDutyYearly"(IN IP_PERC_INCREASE INTEGER, IN IP_OPEX_PERCENTAGE INTEGER )
+       RETURNS TABLE("AccountingNumber" NVARCHAR(10),
+"AccountingNumberDescription" NVARCHAR(50),
+"2017" DECIMAL(28,2),
+"2018_Per_Growth" DECIMAL(28,2),
+"2018" DECIMAL(28,2),
+"2019_Per_Growth" DECIMAL(28,2),
+"2019" DECIMAL(28,2),
+"AVG_YEAR_GROWTH_PER" DECIMAL(28,2),
+"BEFORE_2020" DECIMAL(28,2),
+"AFTER_2020" DECIMAL(28,2),
+"BEFORE_2021" DECIMAL(28,2),
+"AFTER_2021" DECIMAL(28,2),
+"BEFORE_2022" DECIMAL(28,2),
+"AFTER_2022" DECIMAL(28,2)
+ )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+  
+VAR_2017 = select DISTINCT "AccountingNumber",
+"AccountingNumberDescription",SUM("Revenue") OVER(PARTITION BY "AccountingNumber") AS "2017" from "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = '2017' and "Revenue" IS NOT NULL;
+
+VAR_2018 = select DISTINCT "AccountingNumber",
+"AccountingNumberDescription",SUM("Revenue") OVER(PARTITION BY "AccountingNumber") AS "2018" from "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = '2018' and "Revenue" IS NOT NULL;
+
+VAR_2019 = select DISTINCT "AccountingNumber",
+"AccountingNumberDescription",SUM("Revenue") OVER(PARTITION BY "AccountingNumber") AS "2019" from "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = '2019' and "Revenue" IS NOT NULL;
+
+VAR_2020 = select DISTINCT "AccountingNumber",
+"AccountingNumberDescription",SUM("Revenue") OVER(PARTITION BY "AccountingNumber") AS "2020" from "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = '2020' and "Revenue" IS NOT NULL;
+
+VAR_OUT = SELECT 
+A."AccountingNumber",
+A."AccountingNumberDescription",
+A."2017",
+ROUND((B."2018"-A."2017")/B."2018",2) as "2018_Per_Growth",
+B."2018",
+ROUND((C."2019"-B."2018")/C."2019",2) as "2019_Per_Growth",
+C."2019",
+ROUND((((B."2018"-A."2017")/B."2018")+((C."2019"-B."2018")/C."2019"))/2*100,2) as "Avg_Year_Growth_Per",
+D."2020"
+FROM :VAR_2017 AS A 
+LEFT OUTER JOIN :VAR_2018 AS B ON A."AccountingNumber"=B."AccountingNumber"
+LEFT OUTER JOIN :VAR_2019 AS C ON A."AccountingNumber"=C."AccountingNumber"
+LEFT OUTER JOIN :VAR_2020 AS D ON A."AccountingNumber"=D."AccountingNumber"
+ORDER BY A."AccountingNumber" ASC ;
+
+VAR_OUT1 = SELECT 
+"AccountingNumber",
+"AccountingNumberDescription",
+"2017",
+"2018_Per_Growth",
+"2018",
+"2019_Per_Growth",
+"2019",
+"Avg_Year_Growth_Per",
+ROUND("2019"*(1+"Avg_Year_Growth_Per"),2) AS "BEFORE_2020",
+CASE WHEN "AccountingNumber"='801000' THEN 
+ROUND(("2019"*(1+"Avg_Year_Growth_Per"))+("2019"*:IP_OPEX_PERCENTAGE*(1+:IP_PERC_INCREASE)),2) ELSE ROUND("2019"*(1+"Avg_Year_Growth_Per"),2) END AS "AFTER_2020"
+FROM :VAR_OUT;
+
+RETURN
+SELECT "AccountingNumber",
+"AccountingNumberDescription",
+"2017",
+"2018_Per_Growth",
+"2018",
+"2019_Per_Growth",
+"2019",
+"Avg_Year_Growth_Per" AS "AVG_YEAR_GROWTH_PER",
+"BEFORE_2020",
+"AFTER_2020",
+"BEFORE_2021",
+"AFTER_2021",
+ROUND("BEFORE_2021"*(1+"Avg_Year_Growth_Per"),2) AS "BEFORE_2022",
+CASE WHEN "AccountingNumber"='801000' THEN 
+ROUND(("BEFORE_2021"*(1+"Avg_Year_Growth_Per"))+("BEFORE_2021"*:IP_OPEX_PERCENTAGE*(1+:IP_PERC_INCREASE)),2) ELSE ROUND("BEFORE_2021"*(1+"Avg_Year_Growth_Per"),2) END AS "AFTER_2022"
+FROM 
+(SELECT *,
+				  ROUND("BEFORE_2020"*(1+"Avg_Year_Growth_Per"),2) AS "BEFORE_2021",
+				  CASE WHEN "AccountingNumber"='801000' THEN 
+ROUND(("BEFORE_2020"*(1+"Avg_Year_Growth_Per"))+("BEFORE_2020"*:IP_OPEX_PERCENTAGE*(1+:IP_PERC_INCREASE)),2) ELSE ROUND("BEFORE_2020"*(1+"Avg_Year_Growth_Per"),2) END AS "AFTER_2021"
+FROM :VAR_OUT1);
+
+END;

@@ -1,0 +1,13 @@
+TYPE  "EIFA.db.appTableTypes::uttInsUpdDelUserSaveAnalysis"  AS TABLE 
+              (
+                             "UserSaveAnalysisHeaderID" INTEGER,
+							 "UserSaveAnalysisDetailID" INTEGER,
+							 "UserID" NVARCHAR(250),
+                             "QueryDesc" NVARCHAR(4000),
+                             "QuerySQL" CLOB,
+                             "ParentQueryLibraryID" INTEGER,
+                             "ChartType" NVARCHAR (100),
+                             "QueryKeywords" NVARCHAR(4000),
+                             "SaveAnalysisOrder" INTEGER,
+                             "Comments"  NVARCHAR(4000)
+              ); 

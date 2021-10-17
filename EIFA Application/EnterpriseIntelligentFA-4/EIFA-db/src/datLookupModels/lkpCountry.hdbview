@@ -1,0 +1,13 @@
+VIEW "EIFA.db.datLookupModels::lkpCountry" COMMENT 'Country Lookup'
+	(
+		"Client",
+		"CountryCode",
+		"Country"
+	) AS
+		SELECT 
+			t005t."MANDT" AS "Client",
+			t005t."LAND1" AS "CountryCode",
+			t005t."LANDX" AS "Country"
+		FROM "EIFA.db::T005T" t005t
+		WHERE 
+			t005t.SPRAS = 'E'

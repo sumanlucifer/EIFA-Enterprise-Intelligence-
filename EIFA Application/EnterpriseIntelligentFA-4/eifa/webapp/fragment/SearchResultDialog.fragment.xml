@@ -1,0 +1,71 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog busy="{/searchDialogBusy}" stretch="true" showHeader="false" class="dialogManagement background" contentWidth="100%"
+		afterClose="onSearchResultDialogClose" contentHeight="100%">
+		<VBox renderType="Bare" class="searchResultContainer">
+			<HBox class="navigator" id="navigatorBar" justifyContent="End">
+				<SegmentedButton items="{/searchResultDialog/questionNavigator/items}" id="questionNavigator"
+					selectedKey="{/searchResultDialog/questionNavigator/selectedQuestion}" visible="{/searchResultDialog/resultReady}"
+					selectionChange="onQuestionNavigation" class="questionNavigator sapUiLargeMarginBegin">
+					<items>
+						<SegmentedButtonItem text="{index}" key="{index}"/>
+					</items>
+				</SegmentedButton>
+				<HBox>
+					<Button type="Unstyled" class="button yellowButton saveButton sapUiTinyMarginEnd" visible="{/searchResultDialog/resultReady}"
+						text="Save Analysis" press="onSaveAnalysis"/>
+					<Button width="10rem" type="Unstyled" class="button RecommendAnalyzerButton sapUiTinyMarginEnd" visible="{/searchResultDialog/resultReady}"
+						text="Recommend Analyzer" press="onRecommendAnalyzer"/>
+					<Button type="Unstyled" class="button cancelButton transparentButton" text="Cancel" press="onSearchResultDialogClose"/>
+				</HBox>
+				<!--<core:Icon src="sap-icon://decline" size="1rem" press="onSearchResultDialogClose" class="sapUiMediumMarginEnd"/>-->
+			</HBox>
+			<HBox renderType="Bare" alignItems="Center" class="searchbarInContainer">
+				<Image src="{path: '/mic/search/state', formatter: '.formatter.getMicImageSrc'}" width="70px" height="70px" press="onSearchMicPress"
+					useMap="{path: '/mic/search/state', formatter: '.formatter.getMicImageSrc'}" class="sapUiSmallMarginEnd"/>
+				<SearchField id="searchInputInDialog" search="onTextInput" visible="{= ${/mic/search/state !== 'active'}}" value="{/question}"
+					width="1100px" placeholder="What is my revenue for 2020?" class="linedInput sapUiSmallMarginEnd"/>
+			</HBox>
+			<MessagePage visible="{/searchResultDialog/invalidQuestion/visible}" text="{/searchResultDialog/invalidQuestion/errorText}"
+				class="messagePage" showHeader="false" description="" icon="sap-icon://business-objects-experience">
+				<layoutData>
+					<FlexItemData growFactor="1" minHeight="22rem"/>
+				</layoutData>
+			</MessagePage>
+			<VBox visible="{/searchResultDialog/resultReady}">
+				<HBox>
+					<VBox class="chartSection commonBgColor">
+						<HBox justifyContent="SpaceBetween" class="searchResultHeader">
+							<Text text="{/searchResultDialog/title}" maxLines="1" width="30rem"/>
+							<HBox>
+								<Text visible="{= !!${/searchResultDialog/date}}" text="Last updated on {/searchResultDialog/date}" class="sapUiSmallMarginEnd"/>
+								<Image src="./util/image/chartSettings.png" press="onShowChartType" height="1.1875rem" width="1.625rem" class="sapUiSmallMarginEnd"/>
+								<Image src="./util/image/dot.png" height="1rem" press="onShowChartMenu"/>
+							</HBox>
+						</HBox>
+						<VBox id="searchResult"/>
+					</VBox>
+					<VBox class="commentsSection commonBgColor" width="299px">
+						<HBox justifyContent="SpaceBetween" alignItems="Center">
+							<Text text="Comments" class="whiteText sapUiTinyMargin"/>
+							<Image id="commentsMic" src="{path: '/mic/comments/state', formatter: '.formatter.getCommentsMicImageSrc'}" width="12px" height="15px"
+								press="onCommentsMicPress" useMap="{path: '/mic/comments/state', formatter: '.formatter.getCommentsMicImageSrc'}"
+								class="sapUiSmallMarginEnd"/>
+						</HBox>
+						<TextArea enabled="{= ${/mic/comments/state} === 'active'}" value="{/searchResultDialog/comment}" cols="32" rows="12"
+							change="onCommentChange" class="commentsText sapUiTinyMarginBeginEnd"/>
+					</VBox>
+				</HBox>
+				<VBox visible="{= !!${/searchResultDialog/suggestedKpi}.length}">
+					<Title text="Next Best Actions" class="whiteTitle sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+					<HBox id="suggestedKpi" items="{path: '/searchResultDialog/suggestedKpi', factory: '.createSuggestedKpi'}"></HBox>
+				</VBox>
+			</VBox>
+		</VBox>
+		<!--<buttons>-->
+		<!--	<Button type="Unstyled" class="button yellowButton" visible="{/searchResultDialog/resultReady}" text="Save Analysis" press="onSaveAnalysis"/>-->
+		<!--	<Button width="10rem" type="Unstyled" class="button" visible="{/searchResultDialog/resultReady}" text="Recommend Analyzer"-->
+		<!--		press="onRecommendAnalyzer"/>-->
+		<!--	<Button type="Unstyled" class="button transparent" text="Cancel" press="onSearchResultDialogClose"/>-->
+		<!--</buttons>-->
+	</Dialog>
+</core:FragmentDefinition>

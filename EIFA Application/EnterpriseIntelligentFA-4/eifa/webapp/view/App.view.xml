@@ -1,0 +1,5 @@
+<mvc:View controllerName="ey.eifa.controller.App" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell" appWidthLimited="false">
+		<App id="app" backgroundColor="#131527" busy="{/busy}"></App>
+	</Shell>
+</mvc:View>

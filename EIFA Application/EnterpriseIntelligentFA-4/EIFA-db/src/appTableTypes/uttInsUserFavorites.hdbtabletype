@@ -1,0 +1,9 @@
+TYPE  "EIFA.db.appTableTypes::uttInsUserFavorites"  AS TABLE 
+	(
+		"UserID" NVARCHAR(250),
+		"QueryDesc" NVARCHAR(4000),
+		"QuerySQL" CLOB,
+		"ParentQueryLibraryID" INTEGER,
+		"ChartType" NVARCHAR (100)
+	)
+;

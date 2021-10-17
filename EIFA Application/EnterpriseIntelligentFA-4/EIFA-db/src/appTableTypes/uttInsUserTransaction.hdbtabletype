@@ -1,0 +1,14 @@
+TYPE  "EIFA.db.appTableTypes::uttInsUserTransaction"  AS TABLE 
+	(
+		"UserID" NVARCHAR(250),
+		"QueryDesc" NVARCHAR(4000),
+		"QuerySQL" CLOB,
+		"ParentUserTransactionID" INTEGER,
+		"ChartType" NVARCHAR (100),
+		"QueryLibraryID" INTEGER,
+		"UserFavoriteID" INTEGER,
+		"QuerySource" NVARCHAR(100),
+		"IsValidQuery" INTEGER,
+		"IsDataPresent" INTEGER,
+		"QueryKeywords" NVARCHAR(4000)
+	);

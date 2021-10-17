@@ -1,0 +1,23 @@
+PROCEDURE "EIFA.db.mlProcedures::GetbyModelFieldDistinctValues"
+( 
+	IN vModelName NVARCHAR(4000),
+	IN vFieldName NVARCHAR(4000)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+EXECUTE IMMEDIATE ('SELECT DISTINCT "'||:vFieldName||'" FROM "'||:vModelName||'"');
+/*
+SELECT 
+	'SELECT DISTINCT "'||
+	"FieldName"||'" FROM "'||
+	"ModelName"
+FROM "EIFA.db.cnfgTables::cnfgModelMetadata"
+WHERE 
+	"ModelName" = :vModelName AND
+	"FieldName" = :vFieldName
+	;
+*/
+END

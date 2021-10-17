@@ -1,0 +1,14 @@
+{
+	"engines": {
+		"node": "^10.15.3"
+	},
+	"name": "html5-EIFA-approuter",
+	"version": "1.0.0",
+	"dependencies": {
+		"@sap/approuter": "5.5.0",
+		"npm": "^6.9.0"
+	},
+	"scripts": {
+		"start": "node node_modules/@sap/approuter/approuter.js"
+	}
+}

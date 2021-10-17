@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ResponsivePopover verticalScrolling="false" showHeader="false" class="ChartMenu" placement="Bottom" showArrow="false">
+		<VBox renderType="Bare" class="chartMenuList">
+			<!--<HBox class="chartMenu1List">-->
+			<!--	<Image src="./util/image/starFavourite.svg" height="1.5rem" class="sapUiTinyMargin" press="onPressChart"/>-->
+			<!--	<Text text="Add to Favourites" class=" sapUiTinyMargin ChartMenuBtnText"/>-->
+			<!--</HBox>-->
+			<HBox class="chartMenuListOption" id="pdfDownloadContainer">
+				<Image src="./util/image/pdfExport.svg" height="1rem" class="sapUiTinyMargin"/>
+				<Text text="Export As PDF" class="sapUiTinyMargin ChartMenuBtnText chartMenuListOption"/>
+			</HBox>
+		</VBox>
+	</ResponsivePopover>
+</core:FragmentDefinition>

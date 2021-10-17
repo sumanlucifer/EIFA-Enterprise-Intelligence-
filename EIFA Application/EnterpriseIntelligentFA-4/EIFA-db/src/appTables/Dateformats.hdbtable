@@ -1,0 +1,8 @@
+COLUMN TABLE "EIFA.db.appTables::Dateformats" 
+(
+"PostingDate" NVARCHAR(50), 
+"ShortDate" NVARCHAR(50), 
+"LongDate" NVARCHAR(50), 
+"PostingPeriod" INTEGER,
+"DayNumber" INTEGER
+) 

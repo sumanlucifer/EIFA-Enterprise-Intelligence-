@@ -1,0 +1,11 @@
+{
+	
+  	"welcomeFile": "/eifa-1.0.0/index.html",
+	"authenticationMethod": "route",
+	"routes": [{
+		"source": "^/EIFA-NODE_api/(.*)$",
+		"target": "$1",
+		"destination": "EIFA-NODE_api",
+		"csrfProtection": false
+	}]
+}

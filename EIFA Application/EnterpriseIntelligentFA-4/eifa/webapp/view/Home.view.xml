@@ -1,0 +1,78 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="ey.eifa.controller.Home"
+	xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page showHeader="False" backgroundDesign="Transparent">
+		<content>
+			<l:FixFlex>
+				<l:fixContent>
+					<core:Fragment fragmentName="ey.eifa.fragment.ToolHeader" type="XML"/>
+				</l:fixContent>
+				<l:flexContent>
+					<ScrollContainer height="100%" vertical="true" horizontal="true" class="scrollContainer">
+						<VBox class="sapUiSmallMarginBottom">
+							<HBox alignItems="Center" class="sapUiTinyMargin" renderType="Bare">
+								<Image id="searchMic" src="{path: '/mic/search/state', formatter: '.formatter.getMicImageSrc'}" width="70px" height="70px"
+									press="onSearchMicPress" useMap="{path: '/mic/search/state', formatter: '.formatter.getMicImageSrc'}" class="sapUiSmallMarginEnd"/>
+								<Text class="whiteText" text="{/greetingQuestion}" width="30%"/>
+								<SearchField width="1000px" class="linedInput sapUiSmallMarginEnd" search="onTextInput" placeholder="What is my revenue for 2020?"/>
+							</HBox>
+							<HBox class="numericTileContainer" renderType="Bare">
+								<HBox id="staticTiles" renderType="Bare" items="{path: '/staticTiles', factory: '.createStaticTiles'}">
+									<dependents>
+										<core:Fragment fragmentName="ey.eifa.fragment.NumericTile" type="XML"/>
+									</dependents>
+								</HBox>
+								<core:Icon src="sap-icon://refresh" press="onStaticTileRefresh" size="18px" color="#747480" class="refreshIcon"/>
+							</HBox>
+							<HBox class="gridContainer">
+								<VBox width="815px">
+									<HBox>
+										<Title text="Your Favourites" class="gridContainerTitle"/>
+									</HBox>
+									<HBox>
+										<HBox id="favourites" renderType="Bare" class="favouritesContainer" items="{path: '/favourites', factory: '.createFavourites'}"/>
+									</HBox>
+									<HBox>
+										<Title text="Your Insights" class="gridContainerTitle"/>
+									</HBox>
+									<HBox>
+										<HBox id="insights" renderType="Bare" class="insightsContainer" items="{path: '/insights', factory: '.createInsights'}"/>
+									</HBox>
+								</VBox>
+								<VBox width="393px">
+									<HBox>
+										<Title text="Your Recommendations" class="gridContainerTitle"/>
+									</HBox>
+									<List class="recommendationContainer" items="{/userRecommendation/getRecommendations}">
+										<CustomListItem >
+											<VBox class="recommendationListItem">
+												<Title wrapping="true" class="recommendattionListTitle sapUiTinyMarginBottom" text="{recommendation}"/>
+												<HBox>
+													<VBox class="sapUiSmallMarginEnd">
+														<Label class="recommendattionListLabel1 " text="Date"/>
+														<Label class="recommendattionListLabel2" text="{path: '/date', formatter: '.formatter.getRecommendationFormattedDate'}"/>
+														<Link class="viewMoreLink sapUiTinyMarginTop" text="View More" press="handleLinkPress"/>
+													</VBox>
+													<VBox class="">
+														<Label class="recommendattionListLabel1 " text="Relevant"/>
+														<Switch class="recommendationSwitch" change="onChangeRelevant" customTextOn="YES" customTextOff="NO" state="true">
+															<layoutData>
+																<FlexItemData growFactor="1"/>
+															</layoutData>
+														</Switch>
+													</VBox>
+													<!--<VBox class="recommendattionListIcon" justifyContent="End">-->
+													<!--    <Image src="./util/image/dot.png" height="1.3rem" class="sapUiTinyMargin" press="onPressRecommendationOption"/>-->
+													<!--</VBox>-->
+												</HBox>
+											</VBox>
+										</CustomListItem>
+									</List>
+								</VBox>
+							</HBox>
+						</VBox>
+					</ScrollContainer>
+				</l:flexContent>
+			</l:FixFlex>
+		</content>
+	</Page>
+</mvc:View>

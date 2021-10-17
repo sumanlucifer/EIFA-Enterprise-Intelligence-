@@ -1,0 +1,23 @@
+VIEW "EIFA.db.mlModels::mlSuggestedQueryLibrary" COMMENT 'Provides Suggested Question Tags'
+	(
+		"SuggestedQueryLibraryID", 
+		"QueryDesc",
+		"QuerySQL",
+		"GoldenQuestionTags",
+		"QuestionTags",
+		"SuggestedGoldenTags",
+		"SuggestedTags",
+		"Sentiment",
+		"SuggestedQuestionID"
+	) AS
+	SELECT
+		"SuggestedQueryLibraryID", 
+		"QueryDesc",
+		"QuerySQL",
+		"GoldenQuestionTags",
+		"QuestionTags",
+		"SuggestedGoldenTags",
+		"SuggestedTags",
+		"Sentiment",
+		"SuggestedQuestionID"
+	FROM "EIFA.db.appTables::appSuggestedQueryLibrary" 

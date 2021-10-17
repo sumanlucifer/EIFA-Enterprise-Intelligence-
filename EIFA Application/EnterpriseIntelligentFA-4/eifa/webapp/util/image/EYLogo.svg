@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C3FF75B7-5E7C-4692-B0AC-7BB515C1FF56</title>
+    <defs>
+        <polygon id="path-1" points="0.00320855615 0.0520855615 29.9675936 0.0520855615 29.9675936 30.6951872 0.00320855615 30.6951872"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1" transform="translate(-30.000000, -20.000000)">
+            <g id="LOGO" transform="translate(30.000000, 15.000000)">
+                <g id="Group-5" transform="translate(0.000000, 5.000000)">
+                    <polyline id="Fill-1" fill="#FFFFFE" points="4.80834225 24.7075401 10.2896791 24.7075401 10.2896791 21.5246524 4.80834225 21.5246524 4.80834225 19.0232086 10.8718717 19.0232086 8.86016043 15.536738 0.262192513 15.536738 0.262192513 30.6951872 12.3886096 30.6951872 12.3886096 27.2087166 4.80834225 27.2087166 4.80834225 24.7075401"></polyline>
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-3"></g>
+                    <polyline id="Fill-2" fill="#FFFFFE" mask="url(#mask-2)" points="20.4593048 15.536738 17.8844385 20.4835294 15.3157754 15.536738 10.2893583 15.536738 15.5856684 24.7075401 15.5856684 30.6951872 20.1179679 30.6951872 20.1179679 24.7075401 25.4212834 15.536738 20.4593048 15.536738"></polyline>
+                    <polyline id="Fill-4" fill="#FBD020" mask="url(#mask-2)" points="29.9675936 0.0520855615 0 10.9895722 29.9675936 5.6957754 29.9675936 0.0520855615"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

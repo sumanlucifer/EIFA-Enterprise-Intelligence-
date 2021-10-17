@@ -1,0 +1,90 @@
+PROCEDURE "EIFA.db.appProcedures::uspInsUpdDelUserSaveAnalysis"
+( 
+              IN vUserID NVARCHAR(250),
+			  IN vAnalysisHeaderID INTEGER,
+              IN vInputSource "EIFA.db.appTableTypes::uttInsUpdDelUserSaveAnalysis"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+AS
+BEGIN
+            
+            
+			DELETE FROM "EIFA.db.appTables::appUserSaveAnalysisComment"
+			WHERE 
+				"UserSaveAnalysisDetailID" IN 
+				(
+					SELECT 
+						dtl."UserSaveAnalysisDetailID"
+					FROM "EIFA.db.appTables::appUserSaveAnalysisDetail" dtl
+					LEFT OUTER JOIN :vInputSource inpsrc
+						ON dtl."UserSaveAnalysisDetailID" = inpsrc."UserSaveAnalysisDetailID"
+					WHERE
+						dtl."UserSaveAnalysisHeaderID" = :vAnalysisHeaderID AND
+						inpsrc."UserSaveAnalysisDetailID" IS NULL
+				)
+			;
+			
+			DELETE FROM "EIFA.db.appTables::appUserSaveAnalysisDetail"
+			WHERE 
+				"UserSaveAnalysisDetailID" IN 
+				(
+					SELECT 
+						dtl."UserSaveAnalysisDetailID"
+					FROM "EIFA.db.appTables::appUserSaveAnalysisDetail" dtl
+					LEFT OUTER JOIN :vInputSource inpsrc
+						ON dtl."UserSaveAnalysisDetailID" = inpsrc."UserSaveAnalysisDetailID"
+					WHERE
+						dtl."UserSaveAnalysisHeaderID" = :vAnalysisHeaderID AND
+						inpsrc."UserSaveAnalysisDetailID" IS NULL
+				)
+			;
+			
+			
+			 INSERT INTO "EIFA.db.appTables::appUserSaveAnalysisDetail" 
+              (
+                             "UserSaveAnalysisHeaderID", 
+                             "QueryDesc",
+                             "QuerySQL",
+                             "ParentQueryLibraryID",
+                             "ChartType",
+                             "QueryKeywords",
+                             "SaveAnalysisOrder",
+                             "CreatedBy",
+                             "CreatedOn",
+                             "Comments"
+              )
+              SELECT 
+                             :vAnalysisHeaderID "UserSaveAnalysisHeaderID",
+                             "QueryDesc",
+                             "QuerySQL",
+                             NULL "ParentQueryLibraryID",
+                             "ChartType",
+                             "QueryKeywords",
+                             "SaveAnalysisOrder",
+                             :vUserID"CreatedBy",
+                             CURRENT_TIMESTAMP "CreatedOn",
+                             "Comments"
+              FROM :vInputSource inpsrc
+			  WHERE
+				inpsrc."UserSaveAnalysisDetailID" IS NULL
+            ;
+			
+			
+			UPDATE dtl2
+			SET
+				dtl2."QueryDesc" = inpsrc."QueryDesc",
+				dtl2."QuerySQL" = inpsrc."QuerySQL",
+                dtl2."ParentQueryLibraryID" = inpsrc."ParentQueryLibraryID",
+                dtl2."ChartType" = inpsrc."ChartType",
+                dtl2."QueryKeywords" = inpsrc."QueryKeywords",
+                dtl2."SaveAnalysisOrder" = inpsrc."SaveAnalysisOrder",
+				dtl2."Comments" = dtl2."Comments"||' ~ '||inpsrc."Comments"
+			FROM "EIFA.db.appTables::appUserSaveAnalysisDetail" dtl2
+			INNER JOIN :vInputSource inpsrc
+				ON dtl2."UserSaveAnalysisDetailID" = inpsrc."UserSaveAnalysisDetailID"
+			WHERE
+				dtl2."UserSaveAnalysisHeaderID" = :vAnalysisHeaderID
+			;
+END
+

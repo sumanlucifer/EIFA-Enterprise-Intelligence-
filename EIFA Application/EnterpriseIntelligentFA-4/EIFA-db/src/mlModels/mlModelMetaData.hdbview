@@ -1,0 +1,31 @@
+VIEW "EIFA.db.mlModels::mlModelMetaData" COMMENT 'Model Meta Data View for ML Layer'
+	(
+		"ModelMetadataID", 
+		"ModelName",
+		"FieldName",
+		"FieldDescription",
+		"FieldCategory",
+		"FieldType",
+		"FieldLength",
+		"FieldScale",
+		"IsCalculated",
+		"FieldCalculation",
+		"AggregationType",
+		"FieldTags",
+		"DisplayUnit"
+	) AS
+SELECT 
+	"ModelMetadataID", 
+	"ModelName",
+	"FieldName",
+	"FieldDescription",
+	"FieldCategory",
+	"FieldType",
+	"FieldLength",
+	"FieldScale",
+	"IsCalculated",
+	"FieldCalculation",
+	"AggregationType",
+	"FieldTags",
+	"DisplayUnit"
+FROM "EIFA.db.cnfgTables::cnfgModelMetadata"

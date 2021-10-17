@@ -1,0 +1,10 @@
+TYPE  "EIFA.db.appTableTypes::uttInsUserSaveAnalysisInitial"  AS TABLE 
+	(
+		"UserID" NVARCHAR(250),
+		"QueryDesc" NVARCHAR(4000),
+		"QuerySQL" CLOB,
+		"ChartType" NVARCHAR (100),
+		"QueryKeywords" NVARCHAR(4000),
+		"SaveAnalysisOrder" INTEGER,
+		"Comments"  NVARCHAR(4000)
+	);

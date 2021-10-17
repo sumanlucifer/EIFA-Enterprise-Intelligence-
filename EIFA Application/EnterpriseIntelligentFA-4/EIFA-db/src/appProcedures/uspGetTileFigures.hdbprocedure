@@ -1,0 +1,20 @@
+PROCEDURE "EIFA.db.appProcedures::uspGetTileFigures"( )
+ LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+SELECT DISTINCT * FROM
+(
+SELECT 'Revenue' "TileCategory", 500000 as "TileValue", 10 "DeltaValue", '%' "DeltaUnit" FROM "EIFA.db::ACDOCA"
+UNION
+SELECT 'GrossProfit' "TileCategory", 275000 as "TileValue", 5 "DeltaValue", '%' "DeltaUnit"  FROM "EIFA.db::ACDOCA"
+UNION
+SELECT 'FreeCashFLow' "TileCategory", 11.6 as "TileValue", -20.9 "DeltaValue", '%' "DeltaUnit" FROM "EIFA.db::ACDOCA"
+UNION
+SELECT 'Profit/Loss' "TileCategory", 30.8 as "TileValue", 5 "DeltaValue", '%' "DeltaUnit" FROM "EIFA.db::ACDOCA"
+UNION
+SELECT 'EBITMargin' "TileCategory", 7.9 as "TileValue", -5 "DeltaValue", '%' "DeltaUnit"  FROM "EIFA.db::ACDOCA"
+);
+
+END

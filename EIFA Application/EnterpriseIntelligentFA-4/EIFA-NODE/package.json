@@ -1,0 +1,51 @@
+{
+	"name": "EIFA-NODE",
+	"description": "Enterprise Intelligence for Financial Advisor",
+	"files": [],
+	"scripts": {
+		"test": "node node_modules/jest/bin/jest --config jest.json",
+		"test-coverage": "node node_modules/jest/bin/jest --coverage --config jest.json",
+		"start": "node ./application/bin/www",
+		"debug": "nodemon --inspect ./application/bin/www"
+	},
+	"engines": {
+		"node": "10.x"
+	},
+	"version": "1.0.0",
+	"repository": "<Add your repository here>",
+	"license": "ISC",
+	"dependencies": {
+		"@sap/hana-client": "^2.4.167",
+		"@sap/xsenv": "^2.2.0",
+		"@sap/xssec": "^2.2.4",
+		"@sap/hdbext": "^6.2",
+		"cf-nodejs-logging-support": "^6.1.0",
+		"cookie-parser": "~1.4.4",
+		"joi": "^14.3.1",
+		"passport": "0.4.1",
+		"cors": "^2.8.5",
+		"debug": "~2.6.9",
+		"express": "~4.16.1",
+		"http-errors": "~1.6.3",
+		"morgan": "~1.9.1",
+		"pug": "2.0.0-beta11",
+		"group-array": "^1.0.0",
+		"sql-query": "^0.1.27",
+		"axios": "0.20.0-0",
+		"nodemon": "^2.0.4",
+		"dotenv": "^8.2.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.4",
+		"eslint": "^6.8.0",
+		"eslint-auto-fix": "^1.0.0",
+		"eslint-config-node": "^4.0.0",
+		"eslint-config-strongloop": "^2.1.0",
+		"eslint-loader": "^3.0.3",
+		"eslint-plugin-flowtype": "^4.3.0",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-jsx-a11y": "^6.2.3",
+		"jest": "^23.6.0",
+		"jest-junit": "^5.2.0"
+	}
+}

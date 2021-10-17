@@ -1,0 +1,27 @@
+PROCEDURE "EIFA.db.appProcedures::uspGetbyUserIDLastUsrTrnsctn"
+( 
+	IN vUserID NVARCHAR(250)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+	SELECT 
+		"UserTransactionID",
+		"UserID",
+		"QueryDesc",
+		"QuerySQL",
+		"ChartType",
+		"QueryKeywords"
+	FROM "EIFA.db.appTables::appUserTransaction"
+	WHERE 
+		"UserID" = :vUserID AND
+		"IsValidQuery"=1  AND 
+		"QuerySource" = 'New'
+	ORDER BY 
+		"UserTransactionID" DESC
+	LIMIT 1
+	;
+
+END

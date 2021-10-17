@@ -1,0 +1,136 @@
+FUNCTION "EIFA.db.appFunctions::RevenueCuttoff"(IN IP_YEAR INTEGER )
+       RETURNS TABLE ( 
+       	"CompanyCode" NVARCHAR(50),
+		"Country" NVARCHAR(50),
+	--	"Year" NVARCHAR(50),
+		"AccountingNumber" NVARCHAR(50),
+		"AccountingNumberDescription" NVARCHAR(50),
+		"BusinessArea" NVARCHAR(50),
+		"BusinessAreaDescription" NVARCHAR(50),
+	--	"PostingPeriod",
+		"Quarter" NVARCHAR(50),
+	--	"PostingDate",
+		"Value" DECIMAL(32,2),
+		"CostOfGoodsSold" DECIMAL(32,2),
+		"GrossProfit" DECIMAL(32,2),
+		"EBIT" DECIMAL(32,2),
+		"NetIncome" DECIMAL(32,2),
+		"EBITMargin" INTEGER,
+		"NetProfitMargin" INTEGER,
+		"WarrantyLiability" DECIMAL(32,2),
+		"AccountReceivables" DECIMAL(32,2),
+		"CashandShortTermDeposits" DECIMAL(32,2),
+		"WarrantyExpense" DECIMAL(32,2),
+		"WorkingCapital" DECIMAL(32,2),
+		"Assets" DECIMAL(32,2),
+		"AssetTurnOverRatio" INTEGER,
+		"MarketingExpense" DECIMAL(32,2),
+		"Inventory" DECIMAL(32,2),
+		"GrossProfitMargin" INTEGER,
+		"ValuePlanned" DECIMAL(32,2),
+		"RevenuePlanned" DECIMAL(32,2),
+		"CostOfGoodsSoldPlanned" DECIMAL(32,2),
+		"GrossProfitPlanned" DECIMAL(32,2),
+		"EBITPlanned" DECIMAL(32,2), 
+		"NetIncomePlanned" DECIMAL(32,2),
+		"EBITMarginPlanned" INTEGER,
+		"NetProfitMarginPlanned" INTEGER,
+		"WarrantyLiabilityPlanned" DECIMAL(32,2),
+		"AccountReceivablesPlanned" DECIMAL(32,2),
+		"CashandShortTermDepositsPlanned" DECIMAL(32,2),
+		"WarrantyExpensePlanned" DECIMAL(32,2),
+		"WorkingCapitalPlanned" DECIMAL(32,2),
+		"AssetsPlanned" DECIMAL(32,2),
+		"AssetTurnOverRatioPlanned" INTEGER,
+		"MarketingExpensePlanned" DECIMAL(32,2),
+		"InventoryPlanned" DECIMAL(32,2),
+		"GrossProfitMarginPlanned" INTEGER,
+		"Currency" NVARCHAR(5),
+	"Revenue" DECIMAL(32,2),
+	"PostingDate" INTEGER,
+	"Date" NVARCHAR(50),
+	"PostingPeriod" INTEGER,
+	"Year" INTEGER	
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+   RETURN SELECT * FROM (SELECT 
+"CompanyCode",
+		"Country",
+	--	"Year",
+		"AccountingNumber",
+		"AccountingNumberDescription",
+		"BusinessArea",
+		"BusinessAreaDescription",
+	--	"PostingPeriod",
+		"Quarter",
+	--	"PostingDate",
+		"Value",
+		"CostOfGoodsSold",
+		"GrossProfit",
+		"EBIT",
+		"NetIncome",
+		"EBITMargin",
+		"NetProfitMargin",
+		"WarrantyLiability",
+		"AccountReceivables",
+		"CashandShortTermDeposits",
+		"WarrantyExpense",
+		"WorkingCapital",
+		"Assets",
+		"AssetTurnOverRatio",
+		"MarketingExpense",
+		"Inventory",
+		"GrossProfitMargin",
+		"ValuePlanned",
+		"RevenuePlanned",
+		"CostOfGoodsSoldPlanned",
+		"GrossProfitPlanned",
+		"EBITPlanned",
+		"NetIncomePlanned",
+		"EBITMarginPlanned",
+		"NetProfitMarginPlanned",
+		"WarrantyLiabilityPlanned",
+		"AccountReceivablesPlanned",
+		"CashandShortTermDepositsPlanned",
+		"WarrantyExpensePlanned",
+		"WorkingCapitalPlanned",
+		"AssetsPlanned",
+		"AssetTurnOverRatioPlanned",
+		"MarketingExpensePlanned",
+		"InventoryPlanned",
+		"GrossProfitMarginPlanned",
+		"Currency",
+	case when left("Date",2) = '01' then "Revenue"*0.104142 else
+	case when left("Date",2) = '02' then "Revenue"*0.090404 else
+	case when left("Date",2) = '03' then "Revenue"*0.119176 else
+	case when left("Date",2) = '04' then "Revenue"*0.100032 else
+	case when left("Date",2) = '05' then "Revenue"*0.090527 else
+	case when left("Date",2) = '06' then "Revenue"*0.090909 else
+	case when left("Date",2) = '07' then "Revenue"*0.09989 else
+	case when left("Date",2) = '08' then "Revenue"*0.089708 else
+	case when left("Date",2) = '09' then "Revenue"*0.099663 else
+	case when left("Date",2) = '10' then "Revenue"*0.11555 else
+	case when left("Date",2) = '21' then "Revenue"*0.104142 else
+	case when left("Date",2) = '22' then "Revenue"*0.090404 else
+	case when left("Date",2) = '23' then "Revenue"*0.119176 else
+	case when left("Date",2) = '24' then "Revenue"*0.100032 else
+	case when left("Date",2) = '25' then "Revenue"*0.090527 else
+	case when left("Date",2) = '26' then "Revenue"*0.090909 else
+	case when left("Date",2) = '27' then "Revenue"*0.09989 else
+	case when left("Date",2) = '28' then "Revenue"*0.089708 else
+	case when left("Date",2) = '29' then "Revenue"*0.099663 else
+	case when left("Date",2) = '30' then "Revenue"*0.11555 else
+	case when left("Date",2) = '31' then "Revenue"*0.104142 else '0' end
+	end end end end end end end end end end end end end end end end end end end end as "Revenue",
+	"PostingDate",
+	left("Date",7)||right("Date",2) as "Date",
+	CASE WHEN "Year" = :IP_YEAR AND "PostingPeriod" = '12' THEN "PostingPeriod" ELSE 
+	(CASE WHEN "Year" = :IP_YEAR+1 AND "PostingPeriod" = '01' THEN "PostingPeriod" ELSE '0' END) 
+    END AS "PostingPeriod",
+    "Year"
+FROM "EIFA.db.datModels::SalesCuttoffREvenue"
+WHERE "Revenue" != 0)
+WHERE "PostingPeriod" != 0 ;
+END;

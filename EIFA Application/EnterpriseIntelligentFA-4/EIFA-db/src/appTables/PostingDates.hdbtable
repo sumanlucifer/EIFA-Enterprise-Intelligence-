@@ -1,0 +1,7 @@
+COLUMN TABLE "EIFA.db.appTables::PostingDates" 
+(
+"PostingDate" NVARCHAR(50), 
+"PostingPeriod" INTEGER,
+"DayNumber" INTEGER,
+"Holiday" INTEGER
+)

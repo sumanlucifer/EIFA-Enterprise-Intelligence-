@@ -1,0 +1,89 @@
+VIEW "EIFA.db.datModels::RevenueActual" COMMENT 'Revenue Actuals'
+	(
+		"CompanyCode",
+		"Country",
+		"Year",
+		"AccountingNumber",
+		"AccountingNumberDescription",
+		"BusinessArea",
+		"BusinessAreaDescription",
+		"PostingPeriod",
+		"Quarter",
+		"PostingDate",
+		"DocumentDate",
+		"Revenue",
+		"CostOfGoodsSold",
+		"GrossProfit",
+		"EBIT",
+		"NetIncome",
+		"EBITMargin",
+		"NetProfitMargin",
+		"Currency",
+		"RevenueFlag",
+		"CostOfGoodsSoldFlag",
+		"GrossProfitFlag",
+		"EBITFlag",
+		"NetIncomeFlag"
+	) AS
+		SELECT 
+			acdoca."RBUKRS" AS "CompanyCode",
+			t005t."LANDX" AS "Country",
+			acdoca."GJAHR" AS "Year",
+			COALESCE(skat."TXT50",acdoca."RACCT") AS "AccountingNumber",
+			skat."TXT50" AS "AccountingNumberDescription",
+			COALESCE(tgsbt."GTEXT",acdoca."RBUSA") AS "BusinessArea",
+			tgsbt."GTEXT" AS "BusinessAreaDescription",
+			acdoca."POPER" AS "PostingPeriod",
+			CASE	WHEN acdoca."POPER" IN (1,2,3) THEN 'Q1'
+					WHEN acdoca."POPER" IN (4,5,6) THEN 'Q2'
+					WHEN acdoca."POPER" IN (7,8,9) THEN 'Q3' 
+					ELSE 'Q4' END "Quarter",
+			acdoca."BUDAT" AS "PostingDate",
+			acdoca."BLDAT" AS "DocumentDate",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000') THEN 
+					CASE WHEN acdoca."DRCRK" = 'H' THEN "KSL"*-1 ELSE "KSL" END 
+				END AS "Revenue",
+			CASE WHEN acdoca.RACCT IN ('801000') THEN 
+					CASE WHEN acdoca."DRCRK" = 'H' THEN "KSL"*-1 ELSE "KSL" END 
+				END AS "CostOfGoodsSold",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000','801000') THEN 
+					CASE WHEN acdoca."DRCRK" = 'H' THEN "KSL"*-1 ELSE "KSL" END 
+				END AS "GrossProfit",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000','801000','401000','402000','403000','305000') THEN 
+					CASE WHEN acdoca."DRCRK" = 'H' THEN "KSL"*-1 ELSE "KSL" END 
+				END AS "EBIT",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000','801000','401000','402000','403000','305000',
+										'501000','502000','503000','601000') THEN 
+					CASE WHEN acdoca."DRCRK" = 'H' THEN "KSL"*-1 ELSE "KSL" END 
+				END AS "NetIncome",
+			0 AS "EBITMargin",
+			0 AS "NetProfitMargin",
+			acdoca.RKCUR "Currency",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000') THEN 1 ELSE 0 END AS "RevenueFlag",
+			CASE WHEN acdoca.RACCT IN ('801000') THEN 1 ELSE 0 END AS "CostOfGoodsSoldFlag",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000','801000') THEN 1 ELSE 0 END AS "GrossProfitFlag",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000','801000','401000','402000','403000','305000') THEN 1 ELSE 0 END AS "EBITFlag",
+			CASE WHEN acdoca.RACCT IN ('301000','302000','303000','801000','401000','402000','403000','305000','501000','502000','503000','601000') THEN 1 ELSE 0 END AS "NetIncomeFlag"
+		FROM "EIFA.db::ACDOCA" acdoca
+		LEFT OUTER JOIN "EIFA.db::T001" t001 
+			ON 	acdoca.RCLNT = t001.MANDT AND
+				acdoca.RBUKRS = t001.BUKRS
+		LEFT OUTER JOIN "EIFA.db::T005T" t005t
+			ON 	t001.MANDT = t005t.MANDT AND
+				t001.LAND1 = t005t.LAND1 AND
+				t005t.SPRAS = 'E'
+		LEFT OUTER JOIN "EIFA.db::TGSBT" tgsbt 
+			ON 	acdoca.RCLNT = tgsbt.MANDT AND
+				acdoca.RBUSA = tgsbt.GSBER AND
+				tgsbt.SPRAS = 'E'
+		LEFT OUTER JOIN "EIFA.db::SKAT" skat 
+			ON 	acdoca.RCLNT = skat.MANDT AND
+				acdoca.RACCT = skat.SAKNR AND
+				skat.SPRAS = 'E'
+		WHERE
+			acdoca.RACCT IN 
+				(
+					'301000','302000','303000','801000',
+					'401000','402000','403000','305000',
+					'501000','502000','503000','601000'
+				)

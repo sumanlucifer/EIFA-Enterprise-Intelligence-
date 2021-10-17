@@ -1,0 +1,15 @@
+VIEW "EIFA.db.mlModels::mlModelPath" COMMENT 'Model Path View for ML Layer'
+	(
+		"ModelPathID",
+		"ModelName",
+		"ModelDesc",
+		"ModelPath",
+		"ModelTags"
+	) AS
+		SELECT 
+			"ModelPathID",
+			"ModelName",
+			"ModelDesc",
+			"ModelPath",
+			"ModelTags"
+		FROM "EIFA.db.cnfgTables::cnfgModelPath"

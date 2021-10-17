@@ -1,0 +1,32 @@
+PROCEDURE "EIFA.db.appProcedures::uspInsUserFavorites"
+( 
+	IN vUserID NVARCHAR(250),
+	IN vInputSource "EIFA.db.appTableTypes::uttInsUserFavorites"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+AS
+BEGIN
+
+	INSERT INTO "EIFA.db.appTables::appUserFavorites"
+		(
+			"UserID",
+			"QueryDesc",
+			"QuerySQL",
+			"ParentQueryLibraryID",
+			"ChartType",
+			"CreatedBy",
+			"CreatedOn"
+		)
+	SELECT 
+		:vUserID "UserID",
+		"QueryDesc",
+		"QuerySQL",
+		"ParentQueryLibraryID",
+		"ChartType",
+		:vUserID"CreatedBy",
+		CURRENT_TIMESTAMP "CreatedOn"
+	FROM :vInputSource
+	;
+
+END

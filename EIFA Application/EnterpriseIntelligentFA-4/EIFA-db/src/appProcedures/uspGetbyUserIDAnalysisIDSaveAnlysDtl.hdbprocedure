@@ -1,0 +1,32 @@
+PROCEDURE "EIFA.db.appProcedures::uspGetbyUserIDAnalysisIDSaveAnlysDtl"( 
+	IN vUserID NVARCHAR(250),
+	IN vAnalysisID NVARCHAR(250)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+	SELECT 
+		hdr."UserSaveAnalysisHeaderID", 
+		hdr."UserID",
+		hdr."SaveAnalysisName",
+		dtl."UserSaveAnalysisDetailID", 
+		dtl."QueryDesc",
+		dtl."QuerySQL",
+		dtl."Comments",
+		dtl."ChartType",
+		dtl."QueryKeywords",
+		dtl."SaveAnalysisOrder",
+		dtl."CreatedOn"
+	FROM "EIFA.db.appTables::appUserSaveAnalysisHeader" hdr
+	INNER JOIN "EIFA.db.appTables::appUserSaveAnalysisDetail" dtl
+		ON	hdr."UserSaveAnalysisHeaderID" = dtl."UserSaveAnalysisHeaderID"
+	WHERE 
+		hdr."UserID" = :vUserID AND
+		hdr."UserSaveAnalysisHeaderID" = :vAnalysisID
+	ORDER BY 
+		dtl."UserSaveAnalysisDetailID" ASC
+	;
+	
+END

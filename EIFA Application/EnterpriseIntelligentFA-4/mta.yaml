@@ -1,0 +1,104 @@
+ID: EIFA
+_schema-version: "2.1"
+version: 0.0.1
+
+parameters:
+   deploy_mode: html5-repo
+modules:
+  - name: EIFA-approuter
+    type: approuter.nodejs
+    path: EIFA-approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+     - name: EIFA_html5_repo_runtime
+     - name: EIFA-uaa
+     - name: EIFA-NODE_api
+       group: destinations
+       properties:
+          name: EIFA-NODE_api
+          url: '~{url}'
+          forwardAuthToken: true
+
+
+  - name: EIFA_ui_deployer
+    type: com.sap.html5.application-content
+    path: EIFA-uideployer
+    requires:
+     - name: EIFA_html5_repo_host
+    build-parameters:
+      requires:
+       - name: eifa
+         artifacts:
+           - './*'
+         target-path: resources/eifa
+    
+  - name: EIFA-NODE
+    type: nodejs
+    path: EIFA-NODE
+    provides:
+     - name: EIFA-NODE_api
+       properties:
+          url: ${default-url}
+    properties:
+      UAA_SERVICE_NAME: EIFA-uaa
+    requires:
+      - name: EIFA-uaa
+      - name: hdi_EIFA-db
+
+  - name: EIFA-db
+    type: hdb
+    path: EIFA-db
+    requires:
+     - name: hdi_EIFA-db
+
+  - name: eifa
+    type: html5
+    path: eifa
+    parameters:
+       disk-quota: 512M
+       memory: 256M
+    build-parameters:
+       builder: custom
+       commands: 
+        - npm install
+        - npm run build
+       supported-platforms: []
+       build-result: dist
+
+resources:
+  - name: EIFA_html5_repo_runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+
+  - name: EIFA_html5_repo_host
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+   
+  - name: EIFA-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+      config:
+        xsappname: EIFA-xsuaa
+        tenant-mode: dedicated
+  - name: hdi_EIFA-db
+    properties:
+       hdi-container-name: ${service-name}
+    type: com.sap.xs.hdi-container
+
+                              
+  - name: dest_EIFA
+    parameters:
+       service-plan: lite
+       service: destination
+    type: org.cloudfoundry.managed-service
+
+                              

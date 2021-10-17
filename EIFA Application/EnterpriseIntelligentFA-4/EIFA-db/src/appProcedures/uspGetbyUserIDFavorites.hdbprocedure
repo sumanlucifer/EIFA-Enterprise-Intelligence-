@@ -1,0 +1,24 @@
+PROCEDURE "EIFA.db.appProcedures::uspGetbyUserIDFavorites"
+( 
+	IN vUserID NVARCHAR(250)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+	SELECT 
+		"UserFavoritesID",
+		"UserID",
+		"QueryDesc",
+		"QuerySQL",
+		"ParentQueryLibraryID",
+		"ChartType"
+	FROM "EIFA.db.appTables::appUserFavorites"
+	WHERE 
+		"UserID" = :vUserID 
+	ORDER BY 
+		"UserFavoritesID" DESC
+	;
+
+END

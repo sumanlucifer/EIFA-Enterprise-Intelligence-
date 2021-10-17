@@ -1,0 +1,63 @@
+FUNCTION "EIFA.db.appFunctions::Impact_CD"(IN IP_YEAR INTEGER, IN INCREMENT_PERCENT INTEGER, IN OPEX_PERCENT INTEGER DEFAULT 1 )
+       RETURNS TABLE ( 
+       	"Year" INTEGER,
+       	"AccountingNumber" INTEGER,
+		"AccountingNumberDescription" NVARCHAR(4000),
+		"Q1" INTEGER, 
+		"Q2" INTEGER, 
+		"AVG_QTR_GROWTH_PER" DECIMAL(34,2),
+		"Q3" INTEGER, 
+		Normal_growth_of_Q3 DECIMAL(34,2),
+		AFTER_20_Per_growth_Q3 DECIMAL(34,2),
+		"Q4" INTEGER,
+		Normal_growth_of_Q4 DECIMAL(34,2),
+		AFTER_20_Per_growth_Q4 DECIMAL(34,2)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    RETURN
+   SELECT *,ROUND((Normal_growth_of_Q3*(1+Avg_Qtr_growth_per)),2) AS Normal_growth_of_Q4,
+CASE WHEN "AccountingNumberDescription" = 'Operating Expenditure' THEN
+ROUND((Normal_growth_of_Q3*(1+Avg_Qtr_growth_per))+(Normal_growth_of_Q3*:OPEX_PERCENT*(1+:INCREMENT_PERCENT)),2) ELSE
+ROUND((Normal_growth_of_Q3*(1+Avg_Qtr_growth_per))+(Normal_growth_of_Q3*(1+:INCREMENT_PERCENT)),2) END AS AFTER_20_Per_growth_Q4  
+FROM (SELECT A."Year",A."AccountingNumber",
+A."AccountingNumberDescription",A.Q1,B.Q2,
+round((A.Q1-B.Q2)/A.Q1,2) AS Avg_Qtr_growth_per,
+C.Q3,
+round(B.Q2*(1+((A.Q1-B.Q2)/A.Q1)),2) as Normal_growth_of_Q3,
+CASE WHEN A."AccountingNumberDescription" = 'Operating Expenditure' 
+THEN ROUND((((B.Q2*(1+((A.Q1-B.Q2)/A.Q1)))+(B.Q2*:OPEX_PERCENT*(1+:INCREMENT_PERCENT)))),2) ELSE 
+ROUND((((B.Q2*(1+((A.Q1-B.Q2)/A.Q1)))+(B.Q2*(1+:INCREMENT_PERCENT)))),2) END AS AFTER_20_Per_growth_Q3,
+D.Q4
+FROM (SELECT DISTINCT "Year","AccountingNumber",
+"AccountingNumberDescription",
+SUM("Revenue") OVER(PARTITION BY "Year","Quarter","AccountingNumber") AS Q1
+FROM "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = 'IP_YEAR' AND "Revenue" IS NOT NULL AND "Quarter" = 'Q1'
+GROUP BY "Year","AccountingNumber",
+"AccountingNumberDescription","Revenue","Quarter") AS A
+LEFT OUTER JOIN (SELECT DISTINCT "Year","AccountingNumber",
+"AccountingNumberDescription",
+SUM("Revenue") OVER(PARTITION BY "Year","Quarter","AccountingNumber") AS Q2
+FROM "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = 'IP_YEAR' AND "Revenue" IS NOT NULL AND "Quarter" = 'Q2'
+GROUP BY "Year","AccountingNumber",
+"AccountingNumberDescription","Revenue","Quarter") AS B ON A."Year" = B."Year" AND A."AccountingNumber" = B."AccountingNumber"
+LEFT OUTER JOIN (SELECT DISTINCT "Year","AccountingNumber",
+"AccountingNumberDescription",
+SUM("Revenue") OVER(PARTITION BY "Year","Quarter","AccountingNumber") AS Q3
+FROM "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = 'IP_YEAR' AND "Revenue" IS NOT NULL AND "Quarter" = 'Q3'
+GROUP BY "Year","AccountingNumber",
+"AccountingNumberDescription","Revenue","Quarter") AS C ON A."Year" = C."Year" AND A."AccountingNumber" = C."AccountingNumber"
+LEFT OUTER JOIN (SELECT DISTINCT "Year","AccountingNumber",
+"AccountingNumberDescription",
+SUM("Revenue") OVER(PARTITION BY "Year","Quarter","AccountingNumber") AS Q4
+FROM "EIFA.db.datModels::CustomDuty"
+WHERE "Year" = 'IP_YEAR' AND "Revenue" IS NOT NULL AND "Quarter" = 'Q4'
+GROUP BY "Year","AccountingNumber",
+"AccountingNumberDescription","Revenue","Quarter") AS D ON A."Year" = D."Year" AND A."AccountingNumber" = D."AccountingNumber"
+);
+
+END;

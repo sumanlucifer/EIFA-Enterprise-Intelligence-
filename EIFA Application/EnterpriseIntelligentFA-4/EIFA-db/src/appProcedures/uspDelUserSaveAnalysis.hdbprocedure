@@ -1,0 +1,23 @@
+PROCEDURE "EIFA.db.appProcedures::uspDelUserSaveAnalysis"
+( 
+	IN vUserID NVARCHAR(250),
+	IN vUserSaveAnalysisHeaderID NVARCHAR(250)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+AS
+BEGIN
+
+	DELETE
+	FROM "EIFA.db.appTables::appUserSaveAnalysisDetail"
+	WHERE "UserSaveAnalysisHeaderID" = :vUserSaveAnalysisHeaderID
+	;
+
+	DELETE
+	FROM "EIFA.db.appTables::appUserSaveAnalysisHeader"
+	WHERE 
+		"UserID" = :vUserID AND
+		"UserSaveAnalysisHeaderID" = :vUserSaveAnalysisHeaderID
+	;
+   
+END

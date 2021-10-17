@@ -1,0 +1,56 @@
+VIEW "EIFA.db.datModels::GeneralLedgerTotals" COMMENT 'General Ledger TOtals'
+(	"CompanyCode",
+	"Country",
+	"Year",
+	"AccountingNumber",
+	"AccountingNumberDescription",
+	"BusinessArea",
+	"BusinessAreaDescription",
+	"Quarter",
+	"CurrentValue",
+	"PrevValues"	
+) AS
+SELECT A."CompanyCode",
+				A."Country",
+				A."Year",
+				A."AccountingNumber",
+				A."AccountingNumberDescription",
+				A."BusinessArea",
+				A."BusinessAreaDescription",
+				A."Quarter",A."CurrentValue",B."CurrentValue" AS "PrevValues" FROM(
+SELECT ROW_NUMBER() OVER() AS "RowNumber",* FROM (select "CompanyCode",
+				"Country",
+				"Year",
+				"AccountingNumber",
+				"AccountingNumberDescription",
+				"BusinessArea",
+				"BusinessAreaDescription",
+				"Quarter",
+SUM("Value") AS "CurrentValue" from "EIFA.db.datModels::GeneralLedgerActualPlanned"
+group by "CompanyCode",
+				"Country",
+				"Year",
+				"AccountingNumber",
+				"AccountingNumberDescription",
+				"BusinessArea",
+				"BusinessAreaDescription",
+				"Quarter")) AS A 
+
+LEFT OUTER JOIN (
+SELECT ROW_NUMBER() OVER() AS "RowNumber",* FROM (select "CompanyCode",
+				"Country",
+				"Year",
+				"AccountingNumber",
+				"AccountingNumberDescription",
+				"BusinessArea",
+				"BusinessAreaDescription",
+				"Quarter",
+SUM("Value") AS "CurrentValue" from "EIFA.db.datModels::GeneralLedgerActualPlanned"
+group by "CompanyCode",
+				"Country",
+				"Year",
+				"AccountingNumber",
+				"AccountingNumberDescription",
+				"BusinessArea",
+				"BusinessAreaDescription",
+				"Quarter")) AS B ON A."RowNumber"-1 = B."RowNumber"  

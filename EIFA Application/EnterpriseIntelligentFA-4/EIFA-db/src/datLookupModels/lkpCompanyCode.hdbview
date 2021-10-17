@@ -1,0 +1,12 @@
+VIEW "EIFA.db.datLookupModels::lkpCompanyCode" COMMENT 'CompanyCode Lookup'
+	(
+		"Client",
+		"CompanyCode",
+		"CompanyCodeDescription"
+	) AS
+		SELECT 
+			t001.MANDT AS "Client",
+			t001."BUKRS" AS "CompanyCode",
+			t001."BUTXT" AS "CompanyCodeDescription"
+		FROM "EIFA.db::T001" t001 
+	

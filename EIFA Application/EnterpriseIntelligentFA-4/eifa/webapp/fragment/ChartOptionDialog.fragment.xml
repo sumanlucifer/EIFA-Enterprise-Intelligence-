@@ -1,0 +1,64 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<!--<Dialog title="Chart Options" showHeader="true" class="chartOptionsPopover sapUiPopupWithPadding" -->
+	<!--	afterClose="chartOptionsPopoverClose">-->
+	<ResponsivePopover title="Chart Options" class="chartOptionsPopover sapUiPopupWithPadding" placement="Right" modal="true">
+		<VBox renderType="Bare">
+			<Text text="Summary" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/summary1.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/summary2.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/summary3.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+			<core:HTML content="&lt;span class='horizontalBar'/div&gt;"/>
+			<Text text="Trend" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/trend1.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/trend2.svg" height="2rem" useMap="column" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd"
+					press="onChartOptionPress"/>
+				<Image src="./util/icons/trend3.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/trend4.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+			<core:HTML content="&lt;span class='horizontalBar'/div&gt;"/>
+			<Text text="Share" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/share1.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/share2.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/share3.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/share4.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+			<core:HTML content="&lt;span class='horizontalBar'/div&gt;"/>
+			<Text text="Distributions" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/distribution1.svg" height="2rem" useMap="donut" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd"
+					press="onChartOptionPress"/>
+				<Image src="./util/icons/distribution2.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/distribution3.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+			<core:HTML content="&lt;span class='horizontalBar'/div&gt;"/>
+			<Text text="Relationship" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/relation1.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/relation2.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+			<core:HTML content="&lt;span class='horizontalBar'/div&gt;"/>
+			<Text text="Geography" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/geography.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+			<core:HTML content="&lt;span class='horizontalBar'/div&gt;"/>
+			<Text text="Analysis" class="chartText"/>
+			<HBox alignItems="Center" class="chartList">
+				<Image src="./util/icons/analysis1.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/analysis2.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+				<Image src="./util/icons/analysis3.svg" height="2rem" class="ChartOptionbutton chartYellowBtn sapUiMediumMarginEnd" press="onPressChart"/>
+			</HBox>
+		</VBox>
+		<beginButton>
+			<Button type="Unstyled" class="button yellowButton" visible="true" text="Apply" press="onChartOptionApply"/>
+		</beginButton>
+		<endButton>
+			<Button type="Unstyled" class="button transparent" text="Cancel" press="onChartOptionCancel"/>
+		</endButton>
+	</ResponsivePopover>
+	<!--</Dialog>-->
+</core:FragmentDefinition>

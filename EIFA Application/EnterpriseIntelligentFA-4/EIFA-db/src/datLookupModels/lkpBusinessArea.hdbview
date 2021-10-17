@@ -1,0 +1,13 @@
+VIEW "EIFA.db.datLookupModels::lkpBusinessArea" COMMENT 'BusinessArea Lookup'
+	(
+		"Client",
+		"BusinessArea",
+		"BusinessAreaDescription"
+	) AS
+		SELECT 
+			tgsbt."MANDT" AS "Client",
+			tgsbt."GSBER" AS "BusinessArea",
+			tgsbt."GTEXT" AS "BusinessAreaDescription"
+		FROM "EIFA.db::TGSBT" tgsbt 
+		WHERE 
+			TGSBT.SPRAS = 'E'

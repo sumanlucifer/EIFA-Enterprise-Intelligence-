@@ -1,0 +1,44 @@
+PROCEDURE "EIFA.db.appProcedures::uspInsUserTransaction"
+( 
+	IN vUserID NVARCHAR(250),
+	IN vInputSource "EIFA.db.appTableTypes::uttInsUserTransaction"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+AS
+BEGIN
+
+	INSERT INTO "EIFA.db.appTables::appUserTransaction"
+		(
+			"UserID",
+			"QueryDesc",
+			"QuerySQL",
+			"ParentUserTransactionID",
+			"ChartType",
+			"QueryLibraryID",
+			"UserFavoriteID",
+			"QuerySource",
+			"IsValidQuery",
+			"IsDataPresent",
+			"QueryKeywords",
+			"CreatedBy",
+			"CreatedOn"
+		)
+	SELECT 
+		:vUserID "UserID",
+		"QueryDesc",
+		"QuerySQL",
+		"ParentUserTransactionID",
+		"ChartType",
+		"QueryLibraryID",
+		"UserFavoriteID",
+		"QuerySource",
+		"IsValidQuery",
+		"IsDataPresent",
+		"QueryKeywords",
+		:vUserID"CreatedBy",
+		CURRENT_TIMESTAMP "CreatedOn"
+	FROM :vInputSource
+	;
+
+END

@@ -1,0 +1,23 @@
+VIEW "EIFA.db.datLookupModels::lkpAccountingNumber" COMMENT 'AccountingNumber Lookup'
+	(
+		"Client",
+		"AccountingCategory",
+		"AccountingNumber",
+		"AccountingNumberDescription"
+	) AS
+		SELECT DISTINCT
+			acdoca."RCLNT" AS "Client",
+			CASE	WHEN acdoca.RACCT IN ('301000','302000','303000') THEN 'Revenue'
+					WHEN acdoca.RACCT IN ('801000') THEN 'CostOfGoodsSold'
+					WHEN acdoca.RACCT IN ('301000','302000','303000','801000') THEN 'GrossProfit'
+					WHEN acdoca.RACCT IN ('301000','302000','303000','801000','401000','402000','403000','305000') THEN 'EBIT'
+					WHEN acdoca.RACCT IN ('301000','302000','303000','801000','401000','402000','403000','305000',
+					'501000','502000','503000','601000') THEN  'NetIncome' ELSE 'NA'
+				END AS "AccountingCategory",
+			acdoca."RACCT" AS "AccountingNumber",
+			skat."TXT50" AS "AccountingNumberDescription"
+		FROM "EIFA.db::ACDOCA" acdoca
+		LEFT OUTER JOIN "EIFA.db::SKAT" skat 
+			ON 	acdoca.RCLNT = skat.MANDT AND
+				acdoca.RACCT = skat.SAKNR AND
+				skat.SPRAS = 'E'

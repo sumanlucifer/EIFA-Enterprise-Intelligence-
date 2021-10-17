@@ -1,0 +1,57 @@
+PROCEDURE "EIFA.db.appProcedures::uspInsUserSaveAnalysisInitial"
+( 
+	IN vUserID NVARCHAR(250),
+	IN vAnalysisName NVARCHAR(250),
+	IN vInputSource "EIFA.db.appTableTypes::uttInsUserSaveAnalysisInitial"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+AS
+BEGIN
+
+	DECLARE vAnalysisHeaderID INTEGER;
+
+	INSERT INTO "EIFA.db.appTables::appUserSaveAnalysisHeader"
+		(
+			"UserID",
+			"SaveAnalysisName",
+			"CreatedBy",
+			"CreatedOn"
+		)
+	SELECT 
+		:vUserID "UserID",
+		:vAnalysisName "SaveAnalysisName",
+		:vUserID"CreatedBy",
+		CURRENT_TIMESTAMP "CreatedOn"
+	FROM "EIFA.db.appTables::appDummy"
+	;
+
+	SELECT CURRENT_IDENTITY_VALUE() INTO vAnalysisHeaderID FROM  "EIFA.db.appTables::appDummy";
+	
+	INSERT INTO "EIFA.db.appTables::appUserSaveAnalysisDetail" 
+	(
+		"UserSaveAnalysisHeaderID", 
+		"QueryDesc",
+		"QuerySQL",
+		"ParentQueryLibraryID",
+		"ChartType",
+		"QueryKeywords",
+		"SaveAnalysisOrder",
+		"CreatedBy",
+		"CreatedOn",
+		"Comments"
+	)
+	SELECT 
+		:vAnalysisHeaderID "UserSaveAnalysisHeaderID",
+		"QueryDesc",
+		"QuerySQL",
+		NULL "ParentQueryLibraryID",
+		"ChartType",
+		"QueryKeywords",
+		"SaveAnalysisOrder",
+		:vUserID"CreatedBy",
+		CURRENT_TIMESTAMP "CreatedOn",
+		"Comments"
+	FROM :vInputSource
+	;
+END

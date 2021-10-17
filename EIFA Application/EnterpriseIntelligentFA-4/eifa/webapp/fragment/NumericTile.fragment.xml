@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt">
+	<HBox id="numericTile" class="numericTile">
+		<VBox>
+			<Text text="{tilename}" class="title"/>
+			<HBox alignItems="Center">
+				<Text text="{value}" class="number"/>
+				<Text text="{change}" class="percentage"/>
+			</HBox>
+		</VBox>
+	</HBox>
+</core:FragmentDefinition>

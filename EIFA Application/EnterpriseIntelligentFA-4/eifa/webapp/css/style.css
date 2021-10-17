@@ -1,0 +1,644 @@
+@font-face {
+    font-family: EYInterstateRegular;
+    src: url("EYInterstate/EYINTERSTATE-REGULAR.TTF");
+}
+
+@font-face {
+    font-family: EYInterstateBold;
+    src: url("EYInterstate/EYINTERSTATE-BOLD.TTF");
+}
+
+@font-face {
+    font-family: EYInterstateLight;
+    src: url("EYInterstate/EYINTERSTATE-LIGHT.TTF");
+}
+
+.dummy {
+    color: #747480;
+}
+
+
+/*Recommendation panel css*/
+
+.recommendationContainer {
+    /*height: 606px;*/
+    width: 393px;
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: #262739;
+}
+
+.recommendationContainer .sapMLIB {
+    border: none;
+}
+
+.recommendationListItem {
+    width: 363px;
+    height: 121px;
+    background-color: #262739;
+    padding-top: 15px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid #747480;
+}
+
+.recommendationContainer li:last-child .recommendationListItem {
+    border-bottom: none;
+    padding-bottom: 19px;
+}
+
+.recommendattionListTitle {
+    background-color: #262739;
+    color: #FFFFFF;
+    font-family: EYInterstate;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+
+.recommendattionListLabel1 {
+    color: #747480;
+    font-family: EYInterstate;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+
+.recommendattionListLabel2 {
+    color: #FFFFFF;
+    font-family: EYInterstate;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+
+.recommendattionListIcon {
+    margin-left: auto;
+}
+
+.viewMoreLink.sapMLnk {
+    height: 16px;
+    width: 69px;
+    color: #ffffff;
+    font-family: EYInterstate;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+
+.viewMoreLink.sapMLnk:visited {
+    color: #ffffff;
+}
+
+.recommendationSwitch .sapMSwt.sapMSwtOn:not(.sapMSwtAcceptReject) .sapMSwtHandle {
+    box-sizing: border-box;
+    background: #93F0E6;
+    border-color: #ffffff;
+}
+
+.recommendationSwitch .sapMSwtCont {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.recommendationSwitch .sapMSwtOn .sapMSwtHandle,
+.sapMSwtOff .sapMSwtHandle {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.recommendationSwitch .sapMSwt {
+    width: 3rem;
+    height: 1rem;
+}
+
+.recommendationSwitch .sapMSwtText {
+    font-size: 0.7rem;
+}
+
+.recommendationSwitch .sapMSwtText.sapMSwtTextOff {
+    left: 3.4rem;
+}
+
+
+/*start new dimension*/
+
+.gridContainer {
+    padding-left: 30px;
+}
+
+.grid {
+    margin-right: 15px;
+}
+
+.gridContainerTitle {
+    margin-top: 17px;
+    margin-bottom: 15px;
+    height: 19px;
+    color: #747480;
+    font-family: EYInterstate;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 19px;
+}
+
+.numericTileContainer {
+    padding-left: 30px;
+    background-color: #262943;
+    border-bottom: solid yellow 2px;
+    width: 100%;
+}
+
+.numericTile {
+    background-color: #262943;
+    margin-top: 21px;
+    margin-bottom: 25px;
+}
+
+.numericTile .title {
+    font-family: EYInterstateRegular;
+    color: #747480;
+}
+
+.numericTile .number {
+    width: 110px;
+    color: #ffffff;
+    font-family: EYInterstateBold;
+    font-size: 28px;
+    margin-right: 19px;
+    margin-top: 7px;
+}
+
+.numericTile .percentage {
+    width: 68px;
+    margin-top: 6px;
+    color: #FFE600;
+    font-family: EYInterstateRegular;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 21px;
+}
+
+.verticalLineForNumericTile::after {
+    content: '';
+    border-right: 1px solid #acbacc;
+    width: 1px;
+    height: 30px;
+    margin: 29px 22px 2px 22px;
+}
+
+.refreshIcon {
+    margin: 15px 42px 0px 27px;
+}
+
+
+/*end new dimension*/
+
+.empty {
+    background-color: #e4adad;
+}
+
+.favourites {
+    background-color: #262739;
+    padding: 16px 15px 0px 15px;
+}
+
+.gridTitle.sapMText {
+    color: #FFFFFF;
+    font-family: EYInterstate;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.titleMarker {
+    margin-top: 7px;
+    background-color: #FFE600;
+    height: 3px;
+    width: 22px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.commonBgColor {
+    background-color: #282a3b;
+}
+
+.insights {
+    background-color: #40425E;
+}
+
+.background.sapMDialog>.sapMDialogSection {
+    background-color: #131527;
+}
+
+.background .sapMIBar {
+    background-color: #131527 !important;
+    border: none !important;
+}
+
+.background.sapTntToolHeader.sapMTB {
+    background-color: #131527 !important;
+}
+
+.sapMDialogFooter {
+    height: 4rem;
+}
+
+
+
+.suggestedKpi {
+    background: #131527;
+    border: 1px solid #747480;
+    border-radius: 25px;
+    color: #ffffff;
+    padding: 0px 10px 0px 10px;
+}
+
+.suggestedKpi:hover {
+    background: #747480;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+.suggestedKpi:focus {
+    outline: none;
+}
+
+.suggestedKpi:active {
+    background: #282a3b;
+}
+
+.pageHeader.sapTntToolHeader.sapMTB {
+    height: 58px;
+}
+
+.verticalBarForLogo {
+    border-left: 1px solid #747480;
+    height: 20px;
+    margin: 0px 5px 0px 5px;
+}
+
+.whiteText.sapMText {
+    color: #ffffff !important;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.whiteTitle.sapMTitle {
+    color: #ffffff !important;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #53545f !important;
+}
+
+*::-webkit-scrollbar {
+    background-color: #131527 !important;
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: #131527 !important;
+}
+
+.linedInput .sapMSFF {
+    border: none;
+    border-bottom: 1px solid #747480;
+    background: transparent;
+    outline: none;
+}
+
+.linedInput .sapMSFB {
+    font-size: 20px !important;
+    color: #ffffff;
+}
+
+.linedInput .sapMSFI {
+    color: #ffffff;
+    font-size: 16px !important;
+}
+
+.messagePage.sapMMessagePage .sapMText.sapMMessagePageMainText {
+    color: #ffffff !important;
+}
+
+.messagePage .sapMMessagePage.sapMMessagePageInner.sapUiIcon {
+    color: #ffffff !important;
+}
+
+.navigator {
+    height: 45px;
+}
+
+.questionNavigator .sapMSegBBtnInner {
+    height: 30px !important;
+    width: 30px;
+    border-radius: 50% !important;
+    outline: none !important;
+    /*margin-right: 0.5rem;*/
+}
+
+.questionNavigator.sapMSegB .sapMSegBBtn .sapMSegBBtnInner {
+    border-left: 1px solid #0854a0 !important;
+    border-right: 1px solid #0854a0 !important;
+}
+
+.questionNavigator.sapMSegB .sapMSegBBtn {
+    margin-right: 21.5px;
+}
+
+/*.questionNavigator .sapMSegBBtnSel .sapMSegBBtnInner {*/
+/*    background: #ffffff !important;*/
+
+/*}*/
+
+.questionNavigator .sapMSegBBtn:active {
+   color: #000000 !important;
+}
+
+.questionNavigator.sapMSegB .sapMSegBBtn .sapMSegBBtnInner {
+    padding-left: 0rem;
+    padding-right: 0rem;
+    /*color: #000000;*/
+    /*background: #666880;*/
+    font-family: EYInterstate;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 26px;
+}
+
+.questionNavigator .sapMSegBBtn {}
+
+.button:focus {
+    outline: none;
+}
+
+.button {
+    border-radius: 1px;
+    width: 130px;
+    border: 1px solid #747480;
+}
+
+.button .sapMBtnContent {
+    font-family: EYInterstate;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+
+.saveButton {
+    height: 31px;
+    width: 113px;
+}
+
+.cancelButton {
+    height: 31px;
+    width: 114px;
+}
+
+.RecommendAnalyzerButton {
+    height: 31px;
+    width: 170px;
+}
+
+.yellowButton {
+    background: #FFE600;
+    color: #000000;
+}
+
+.yellowButton:hover {
+    background: #f5de08;
+    cursor: pointer;
+}
+
+.yellowButton:active {
+    background: #ffe600
+}
+
+.transparentButton {
+    color: #747480;
+    background: transparent;
+}
+
+.transparentButton:hover {
+    background: #282a3b;
+    cursor: pointer;
+}
+
+.transparentButton:active {
+    background: transparent;
+}
+
+
+.chartSection {
+    width: 921px;
+}
+
+.commentsSection {
+    width: 299px;
+}
+
+
+
+/*suman*/
+
+.sapUiBLy {
+    opacity: 0 !important;
+}
+
+.horizontalBar {
+    height: 1px;
+    width: 285px;
+    opacity: 0.2;
+    transform: rotate(-180deg);
+    background-color: #747480;
+    border-left: 15px solid #0a0b14 !important;
+}
+
+.chartOptionsPopover.sapMDialog>.sapMDialogSection {
+    background-color: #0A0B14;
+    height: 779px;
+    width: 323px;
+    box-shadow: 0 -2px 6px 2px rgba(0, 0, 0, 0.5);
+}
+
+.chartOptionsPopover .sapMIBar {
+    background-color: #0A0B14 !important;
+    border: none !important;
+}
+
+.chartList {
+    background-color: #0A0B14;
+    border-left: 15px solid #0a0b14 !important;
+    border-bottom: 15px solid #0a0b14 !important;
+}
+
+.chartText {
+    background-color: #0A0B14;
+    color: #FFFFFF;
+    font-family: EYInterstate;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 19px;
+    border-left: 20px solid #0a0b14 !important;
+    border-bottom: 20px solid #0a0b14 !important;
+    border-top: 15px solid #0a0b14 !important;
+}
+
+
+/*Dialog management */
+
+.dialogManagement.sapMDialog {
+    max-width: 100% !important;
+    left: 0% !important;
+    right: 0% !important;
+}
+
+.dialogManagement.sapMDialog.sapMDialogStretched {
+    bottom: 0% !important;
+    top: 0% !important;
+    /*67px*/
+}
+
+.searchResultContainer {
+    padding: 9.5px 30px 15px 30px;
+}
+
+.searchbarInContainer {
+    height: 79px;
+    /*margin-bottom: 15px;*/
+    /*margin-top: 15px;*/
+}
+
+.searchResultHeader {
+    margin: 20px;
+}
+
+.searchResultHeader .sapMText {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-family: EYInterstateLight;
+}
+
+.resultTable .sapMTableTH {
+    background: #202132;
+}
+
+.resultTable.sapMListBGTranslucent .sapMListTblHeader,
+.sapMListBGTranslucent .sapMListTblFooter {
+    background-color: #747480 !important;
+}
+
+.resultTable .sapMListTbl .sapMText,
+.sapMListTbl .sapMLabel {
+    color: #747480;
+    font-family: EYInterstateRegular;
+    font-size: 14px;
+}
+
+.resultTable td .sapMText {
+    color: #ffffff !important;
+    font-family: EYInterstateLight;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.resultTable .sapMLIB {
+    background: #202132;
+}
+
+.sapMLIBShowSeparator>td {
+    border-top: 1px solid #747480;
+}
+
+.resultTable .sapMListShowSeparatorsAll .sapMLIBShowSeparator:last-child>td:not(.sapMListTblDummyCell),
+.sapMListShowSeparatorsAll .sapMListTblSubRow:last-child>td:not(.sapMListTblDummyCell) {
+    border-bottom: none;
+}
+
+.commentsText .sapMInputBaseContentWrapper {
+    background: #202132;
+    border: 0.5px solid #595959;
+}
+
+.commentsText .sapMInputBaseInner:hover {
+    background: #202132;
+    border-color: #595959;
+    */
+}
+
+.commentsText .sapMInputBaseInner {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: EYInterstateLight;
+}
+
+
+/*chartOptionsPopover dialog header text*/
+
+.sapMIBar-CTX .sapMTitle {
+    border-bottom: 2px solid #FFE600 !important;
+    height: 21px;
+    width: 117px;
+    color: #FFFFFF;
+    font-family: EYInterstate;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 21px;
+}
+
+.sapMPopover.sapUiPopupWithPadding .sapMPopoverScroll {
+    padding: 1rem;
+    background-color: #0a0b14;
+}
+
+.ChartOptionbutton {
+    border-radius: 1px;
+    height: 21px;
+    width: 19px;
+    background-color: #0a0b14;
+    border: 1px solid #0a0b14;
+    padding: 0px 10px 0px 10px;
+    /*font-size: 16px;*/
+    font-weight: 500;
+}
+
+.chartYellowBtn {
+    background-color: #0a0b14;
+}
+
+.chartYellowBtn:hover {
+    background: #FFE600;
+    cursor: pointer;
+}
+
+.chartYellowBtn:active {
+    background: transparent;
+}
+
+
+/*chartMenu css*/
+
+.ChartMenu {
+    border-radius: 1px;
+    border: none !important;
+}
+
+.chartMenuList {
+    border: 2px solid #ffffff !important;
+}
+
+.ChartMenuBtnText {
+    color: #2E2E38;
+    font-family: "Avenir Next";
+    font-size: 15px;
+    font-weight: 500;
+    /*border-left: 5px solid #ffffff !important;*/
+}
+
+.chartMenuListOption {
+    cursor: pointer;
+}
